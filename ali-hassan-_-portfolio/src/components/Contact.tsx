@@ -58,7 +58,7 @@ const Contact = () => {
             <span className="w-8 h-[1px] bg-primary/30"></span>
           </div>
           <h3 className="text-5xl md:text-6xl font-black text-on-surface tracking-tighter leading-[0.8] uppercase">
-            Let's <span className="text-primary italic">Talk.</span>
+            Contact <span className="text-primary italic"></span>
           </h3>
         </motion.div>
 
