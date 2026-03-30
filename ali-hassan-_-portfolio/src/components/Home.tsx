@@ -13,14 +13,15 @@ const Home = () => {
       </div>
 
       <div className="max-w-7xl w-full relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-        {/* Profile Side (Now on the Left) */}
+        
+        {/* Profile Side - FIXED: Mobile par bhi show hogi aur upar aayegi */}
         <motion.div 
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative hidden lg:block"
+          className="relative order-first lg:order-none block" // 'hidden lg:block' hata kar 'block' kar diya
         >
-          <div className="relative p-3 rounded-full border-2 border-primary/20 glow-shadow max-w-sm mx-auto group">
+          <div className="relative p-3 rounded-full border-2 border-primary/20 glow-shadow max-w-[280px] sm:max-w-sm mx-auto group">
             <div className="aspect-square rounded-full overflow-hidden border-4 border-surface shadow-2xl">
               <img 
                 src={Profile}
@@ -36,6 +37,7 @@ const Home = () => {
           </div>
         </motion.div>
 
+        {/* Text Side */}
         <motion.div 
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -44,7 +46,7 @@ const Home = () => {
         >
           <div className="space-y-8">
           {/* Branding Tag */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center lg:justify-start gap-3">
             <span className="h-[1px] w-12 bg-primary"></span>
             <span className="text-xs md:text-sm uppercase tracking-[0.3em] text-primary font-bold">
               Full-Stack Architecture & 3D Web
@@ -53,7 +55,7 @@ const Home = () => {
 
           {/* Main Heading */}
           <div className="space-y-8">
-            <h1 className="text-xl sm:text-8xl lg:text-5xl font-black text-on-surface leading-[0.8] tracking-tighter uppercase">
+            <h1 className="text-5xl sm:text-8xl lg:text-5xl font-black text-on-surface leading-[0.9] lg:leading-[0.8] tracking-tighter uppercase">
               Ali <span className="text-primary italic">Hassan.</span>
             </h1>
 
@@ -63,20 +65,19 @@ const Home = () => {
                 Full-Stack Developer specializing in building <span className="text-primary">high-performance</span> and scalable web applications.
               </p>
               
-              <p className="text-on-surface-variant leading-relaxed text-base md:text-lg font-medium border-l-2 border-primary/20 pl-6 py-2">
+              <p className="text-on-surface-variant leading-relaxed text-base md:text-lg font-medium border-l-2 border-primary/20 pl-6 py-2 text-left">
                 Hi 👋! I’m a developer dedicated to the <span className="text-on-surface">Laravel & React ecosystem</span>. 
                 With expertise in bridging robust backend architecture with immersive frontend experiences, 
                 I build everything from enterprise-grade <span className="text-on-surface">ERP systems</span> to interactive <span className="text-on-surface">3D web applications</span> using Three.js.
               </p>
 
-              <p className="text-on-surface-variant/70 leading-relaxed text-sm md:text-base italic font-light">
+              <p className="text-on-surface-variant/70 leading-relaxed text-sm md:text-base italic font-light hidden md:block">
                 I am passionate about transforming complex ideas into elegant digital products that deliver real value and exceptional user experiences.
               </p>
             </div>
           </div>
           </div>
 
-          {/* CTA Buttons */}
         </motion.div>
       </div>
       <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
