@@ -80,21 +80,21 @@ const Project = () => {
       category: "F&B Management", 
       tech: ["Laravel", "React"], 
       image: POSImg,
-      github: "https://github.com/alihassanfullstackdev-code/RestoPos" 
+      github: "https://github.com/alihassanfullstackdev-code/Restaurant-Software" 
     },
     { 
       title: "EduShield ERP", 
       category: "Academic System", 
       tech: ["PHP", "Laravel"], 
       image: SchoolImg,
-      github: "https://github.com/alihassanfullstackdev-code/EduShield" 
+      github: "https://github.com/alihassanfullstackdev-code/School-ERP" 
     },
     { 
       title: "CaliPizza Digital", 
       category: "E-Commerce", 
       tech: ["React", "GSAP"], 
       image: CaliPizzaImg,
-      github: "https://github.com/alihassanfullstackdev-code/CaliPizza" 
+      github: "https://github.com/alihassanfullstackdev-code/Restaurant-Software" 
     },
     { 
       title: "AutoDrive Hub", 
@@ -108,7 +108,7 @@ const Project = () => {
       category: "Service Platform", 
       tech: ["Vite", "Firebase"], 
       image: HomeInspImg,
-      github: "https://github.com/alihassanfullstackdev-code/InspectPro" 
+      github: "https://github.com/alihassanfullstackdev-code/Home-Inspection-Website" 
     }
   ];
 
