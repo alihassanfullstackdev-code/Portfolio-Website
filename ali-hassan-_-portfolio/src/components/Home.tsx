@@ -53,7 +53,7 @@ const Home = () => {
 
           {/* Main Heading */}
           <div className="space-y-8">
-            <h1 className="text-6xl sm:text-8xl lg:text-9xl font-black text-on-surface leading-[0.8] tracking-tighter uppercase">
+            <h1 className="text-xl sm:text-8xl lg:text-5xl font-black text-on-surface leading-[0.8] tracking-tighter uppercase">
               Ali <span className="text-primary italic">Hassan.</span>
             </h1>
 
