@@ -80,7 +80,7 @@ const Experience = () => {
     {
       role: "MERN Stack Trainee",
       company: "CodeBrisk",
-      duration: "2024 — 2025",
+      duration: "2024 — 2026",
       location: "Sargodha, PK",
       current: false,
       isTraining: true,

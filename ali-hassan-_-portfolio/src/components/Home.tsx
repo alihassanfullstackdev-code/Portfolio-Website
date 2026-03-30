@@ -25,12 +25,12 @@ const Home = () => {
               <img 
                 src={Profile}
                 alt="Ali Hassan - Full Stack Developer" 
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-110 group-hover:scale-100"
+                className="w-full h-full object-cover"
               />
             </div>
             {/* Experience Badge */}
             <div className="absolute -bottom-4 -right-2 p-5 glass rounded-2xl border border-primary/20 shadow-xl">
-              <span className="block text-primary font-black text-2xl leading-none">1+ Year</span>
+              <span className="block text-primary font-black text-2xl leading-none">2+ Year</span>
               <span className="text-[10px] uppercase tracking-tighter font-bold text-on-surface-variant">Experience</span>
             </div>
           </div>

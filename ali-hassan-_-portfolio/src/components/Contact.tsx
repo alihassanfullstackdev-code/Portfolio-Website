@@ -57,9 +57,9 @@ const Contact = () => {
             <h2 className="text-xl font-black uppercase tracking-[0.5em] text-primary">Get in Touch</h2>
             <span className="w-8 h-[1px] bg-primary/30"></span>
           </div>
-          <h3 className="text-5xl md:text-6xl font-black text-on-surface tracking-tighter leading-[0.8] uppercase">
+          {/* <h3 className="text-5xl md:text-6xl font-black text-on-surface tracking-tighter leading-[0.8] uppercase">
             Contact <span className="text-primary italic"></span>
-          </h3>
+          </h3> */}
         </motion.div>
 
         {/* Clickable Contact Grid */}

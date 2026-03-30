@@ -91,7 +91,7 @@ const Project = () => {
         >
           <div className="flex items-center gap-3 mb-6">
             <span className="w-10 h-[1px] bg-primary/40"></span>
-            <span className="text-xl font-bold uppercase tracking-[0.6em] text-primary">Showcase</span>
+            <span className="text-xl font-bold uppercase tracking-[0.6em] text-primary">Projects</span>
             <span className="w-10 h-[1px] bg-primary/40"></span>
           </div>
         </motion.div>
