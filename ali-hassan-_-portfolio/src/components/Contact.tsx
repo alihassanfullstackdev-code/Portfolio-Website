@@ -1,172 +1,113 @@
-import React, { useRef, useState } from 'react'; // useRef aur useState add kiya
+import React from 'react';
 import { motion } from "motion/react";
-import { Mail, Phone, Linkedin, Github } from "lucide-react";
-import emailjs from '@emailjs/browser'; // EmailJS import kiya
+import { Mail, Phone, Linkedin, Github, Instagram, ArrowUpRight } from "lucide-react";
 
 const Contact = () => {
-  const form = useRef<HTMLFormElement>(null); // Form reference with type
-  const [isSending, setIsSending] = useState(false);
-  const [status, setStatus] = useState("");
-
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!form.current) return; // Ensure form exists
-
-    setIsSending(true);
-
-    emailjs.sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        form.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-    .then((result) => {
-        setStatus("success");
-        setIsSending(false);
-        form.current?.reset(); // Use ref to reset form safely
-        setTimeout(() => setStatus(""), 5000); // 5 sec baad message gayab
-    }, (error) => {
-        setStatus("error");
-        setIsSending(false);
-    });
-  };
+  const contactLinks = [
+    { 
+      icon: Mail, 
+      label: "Email", 
+      value: "alihassan.fullstack.dev@gmail.com", 
+      href: "mailto:alihassan.fullstack.dev@gmail.com",
+      color: "hover:text-blue-400"
+    },
+    { 
+      icon: Linkedin, 
+      label: "LinkedIn", 
+      value: "Ali Hassan", 
+      href: "https://www.linkedin.com/in/ali-hassan-4880b3266/",
+      color: "hover:text-blue-600"
+    },
+    { 
+      icon: Github, 
+      label: "GitHub", 
+      value: "alihassan-code", 
+      href: "https://github.com/alihassanfullstackdev-code",
+      color: "hover:text-white"
+    },
+    { 
+      icon: Instagram, 
+      label: "Instagram", 
+      value: "Ali Hassan", // Apna handle yahan add karein
+      href: "https://instagram.com/mirza_alihassan96", 
+      color: "hover:text-pink-500"
+    },
+    { 
+      icon: Phone, 
+      label: "WhatsApp / Call", 
+      value: "+92 301 6159800", 
+      href: "https://wa.me/923016159800",
+      color: "hover:text-green-500"
+    }
+  ];
 
   return (
-    <section id="contact" className="py-20 md:py-32 px-6 md:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
-          
-          {/* Left Side: Contact Info */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-12"
-          >
-            <div className="space-y-4 text-center lg:text-left">
-              <h2 className="text-sm label-editorial text-primary uppercase tracking-widest font-bold">Contact</h2>
-              <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-tight">
-                Let's build <br className="hidden sm:block" />
-                something <span className="text-primary">extraordinary.</span>
-              </h3>
-            </div>
+    <section id="contact" className="py-32 px-8 bg-surface relative overflow-hidden">
+      <div className="max-w-5xl mx-auto flex flex-col items-center">
+        
+        {/* Minimal Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-24 space-y-4"
+        >
+          <div className="flex items-center justify-center gap-3">
+            <span className="w-8 h-[1px] bg-primary/30"></span>
+            <h2 className="text-xl font-black uppercase tracking-[0.5em] text-primary">Get in Touch</h2>
+            <span className="w-8 h-[1px] bg-primary/30"></span>
+          </div>
+          <h3 className="text-5xl md:text-6xl font-black text-on-surface tracking-tighter leading-[0.8] uppercase">
+            Let's <span className="text-primary italic">Talk.</span>
+          </h3>
+        </motion.div>
 
-            <div className="space-y-8">
-              {[
-                { 
-                  icon: Mail, 
-                  label: "Email Me", 
-                  value: "alihassan.fullstack.dev@gmail.com", 
-                  href: "mailto:alihassan.fullstack.dev@gmail.com" 
-                },
-                { 
-                  icon: Phone, 
-                  label: "Call Me", 
-                  value: "+92 301 6159800", 
-                  href: "tel:+923016159800" 
-                },
-                { 
-                  icon: Linkedin, 
-                  label: "LinkedIn Profile", 
-                  value: "Ali Hassan", 
-                  href: "https://www.linkedin.com/in/ali-hassan-4880b3266/" 
-                },
-                { 
-                  icon: Github, 
-                  label: "GitHub Profile", 
-                  value: "alihassan-code", 
-                  href: "https://github.com/alihassanfullstackdev-code" 
-                }
-              ].map((item, i) => (
-                <div key={i} className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 group text-center sm:text-left">
-                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full glass flex items-center justify-center text-primary group-hover:bg-primary/20 transition-all shrink-0">
-                    <item.icon className="w-5 h-5 md:w-6 md:h-6" />
-                  </div>
-                  <div>
-                    <p className="text-xs md:text-sm uppercase tracking-widest text-on-surface-variant mb-1 font-bold">{item.label}</p>
-                    <a 
-                      href={item.href} 
-                      target={item.href.startsWith('http') ? "_blank" : undefined}
-                      rel={item.href.startsWith('http') ? "noopener noreferrer" : undefined}
-                      className="text-xl md:text-2xl font-bold hover:text-primary transition-colors break-all"
-                    >
-                      {item.value}
-                    </a>
-                  </div>
+        {/* Clickable Contact Grid */}
+        <div className="w-full grid md:grid-cols-2 gap-4">
+          {contactLinks.map((item, i) => (
+            <motion.a
+              key={i}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className={`group relative p-8 rounded-[2rem] bg-surface-high/40 border border-white/5 flex items-center justify-between transition-all duration-500 hover:bg-surface-high hover:border-primary/20 ${item.color}`}
+            >
+              <div className="flex items-center gap-6">
+                <div className="w-14 h-14 rounded-2xl bg-surface flex items-center justify-center text-on-surface-variant group-hover:text-inherit group-hover:scale-110 transition-all duration-500 shadow-xl border border-white/5">
+                  <item.icon className="w-6 h-6" />
                 </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Right Side: Contact Form */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="glass p-6 md:p-10 rounded-[2rem] glow-shadow"
-          >
-            <form ref={form} className="space-y-6 md:space-y-8" onSubmit={sendEmail}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs label-editorial text-on-surface-variant uppercase font-bold tracking-widest">Full Name</label>
-                  <input 
-                    name="from_name" // Template Variable: {{from_name}}
-                    required
-                    className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary px-0 py-3 text-on-surface transition-all placeholder:text-neutral-600" 
-                    placeholder="Your Name" 
-                    type="text" 
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs label-editorial text-on-surface-variant uppercase font-bold tracking-widest">Email Address</label>
-                  <input 
-                    name="from_email" // Template Variable: {{from_email}}
-                    required
-                    className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary px-0 py-3 text-on-surface transition-all placeholder:text-neutral-600" 
-                    placeholder="your@email.com" 
-                    type="email" 
-                  />
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant/40 mb-1">{item.label}</p>
+                  <p className="text-lg md:text-xl font-bold tracking-tight break-all">{item.value}</p>
                 </div>
               </div>
-              <div className="space-y-2">
-                <label className="text-xs label-editorial text-on-surface-variant uppercase font-bold tracking-widest">Subject</label>
-                <input 
-                  name="subject" // Template Variable: {{subject}}
-                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary px-0 py-3 text-on-surface transition-all placeholder:text-neutral-600" 
-                  placeholder="Project Inquiry" 
-                  type="text" 
-                />
+              
+              <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-4 group-hover:translate-x-0">
+                <ArrowUpRight className="w-5 h-5" />
               </div>
-              <div className="space-y-2">
-                <label className="text-xs label-editorial text-on-surface-variant uppercase font-bold tracking-widest">Message</label>
-                <textarea 
-                  name="message" // Template Variable: {{message}}
-                  required
-                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary px-0 py-3 text-on-surface transition-all placeholder:text-neutral-600 resize-none" 
-                  placeholder="Tell me about your project..." 
-                  rows={4}
-                ></textarea>
-              </div>
-
-              <button 
-                type="submit"
-                disabled={isSending}
-                className="w-full py-4 md:py-5 bg-gradient-to-r from-primary to-primary-container text-on-surface font-bold rounded-2xl hover:shadow-[0_0_30px_rgba(245,158,11,0.2)] active:scale-[0.98] transition-all disabled:opacity-50"
-              >
-                {isSending ? "Sending Message..." : "Send Message"}
-              </button>
-
-              {/* Status Messages */}
-              {status === "success" && (
-                <p className="text-green-500 text-center font-bold text-sm">Message sent successfully! ✨</p>
-              )}
-              {status === "error" && (
-                <p className="text-red-500 text-center font-bold text-sm">Oops! Something went wrong. ❌</p>
-              )}
-            </form>
-          </motion.div>
+            </motion.a>
+          ))}
         </div>
+
+        {/* Final CTA Footer */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="mt-24 text-center"
+        >
+          <p className="text-on-surface-variant/40 font-medium tracking-widest text-[10px] uppercase">
+            Based in Punjab, Pakistan — Available for Worldwide Projects
+          </p>
+        </motion.div>
+
       </div>
+
+      {/* Decorative Blur */}
+      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
     </section>
   );
 };

@@ -1,9 +1,10 @@
 import { Twitter, Linkedin, Github } from "lucide-react";
 
 export const NAV_LINKS = [
-  { name: "Work", href: "#work" },
-  { name: "Expertise", href: "#expertise" },
-  { name: "About", href: "#about" },
+  { name: "Home", href: "#home" },
+  { name: "Education", href: "#education" },
+  { name: "Experience", href: "#experience" },
+  { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ];
 

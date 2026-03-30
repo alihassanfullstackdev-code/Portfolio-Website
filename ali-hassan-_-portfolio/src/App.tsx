@@ -3,10 +3,10 @@ import { motion, useScroll, useSpring } from "motion/react";
 
 // Components Imports
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Expertise from './components/Experties';
-import Portfolio from './components/Portfolio';
+import Home from './components/Home';
+import Education from './components/Education';
+import Experience from './components/Experience';
+import Project from './components/Project';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -27,12 +27,12 @@ export default function App() {
       />
       
       <Navbar />
-      <Hero />
-      <About />
-      <Expertise />
-      <Portfolio />
+      <Home />
+      <Education />
+      <Experience />
+      <Project />
       <Contact />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
