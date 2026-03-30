@@ -69,8 +69,7 @@ const Home = () => {
     </p>
 
     <p className="text-on-surface-variant leading-relaxed text-sm md:text-base opacity-80 italic">
-      Currently exploring the intersection of high-performance backend architecture and creative front-end technologies to simplify complex decision-making through intuitive design.
-    </p>
+      Combining strong tech with creative design to turn complex data into simple, user-friendly experiences    </p>
   </div>
 </div>
         </motion.div>
