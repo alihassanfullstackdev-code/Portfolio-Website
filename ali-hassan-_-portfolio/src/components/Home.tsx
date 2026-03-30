@@ -43,35 +43,40 @@ const Home = () => {
           className="space-y-8 text-center lg:text-left"
         >
           <div className="space-y-8">
-  {/* Branding Tag */}
-  <div className="flex items-center gap-3">
-    <span className="h-[1px] w-12 bg-primary"></span>
-    <span className="text-xs md:text-sm uppercase tracking-[0.3em] text-primary font-bold">
-      Full-Stack Architecture & 3D Web
-    </span>
-  </div>
+          {/* Branding Tag */}
+          <div className="flex items-center gap-3">
+            <span className="h-[1px] w-12 bg-primary"></span>
+            <span className="text-xs md:text-sm uppercase tracking-[0.3em] text-primary font-bold">
+              Full-Stack Architecture & 3D Web
+            </span>
+          </div>
 
-  {/* Main Heading */}
-  <h1 className="text-6xl sm:text-8xl lg:text-7xl font-extrabold text-editorial leading-[0.85] tracking-tighter">
-    Ali <span className="text-primary">Hassan.</span>
-  </h1>
+          {/* Main Heading */}
+          <div className="space-y-8">
+            <h1 className="text-6xl sm:text-8xl lg:text-9xl font-black text-on-surface leading-[0.8] tracking-tighter uppercase">
+              Ali <span className="text-primary italic">Hassan.</span>
+            </h1>
 
-  {/* Detailed Professional Bio */}
-  <div className="max-w-3xl space-y-6">
-    <p className="text-xl md:text-2xl text-on-surface font-semibold leading-snug">
-      Engineering robust digital solutions through <span className="text-primary italic">precision</span> and <span className="text-primary italic">performance</span>.
-    </p>
-    
-    <p className="text-on-surface-variant leading-relaxed text-base md:text-lg font-light border-l-2 border-primary/20 pl-6 py-2">
-      With a core focus on the <span className="text-on-surface font-medium">Laravel & React ecosystem</span>, I build applications that bridge the gap between complex data management and immersive user interaction. 
-      From developing full-scale <span className="text-on-surface font-medium">ERP systems and POS solutions</span> to experimenting with <span className="text-on-surface font-medium">React Three Fiber</span> for 3D web experiences, 
-      my goal is to create software that is as reliable as it is visually compelling.
-    </p>
+            {/* Detailed Professional Bio */}
+            <div className="max-w-3xl space-y-6">
+              <p className="text-xl md:text-2xl text-on-surface font-bold leading-tight tracking-tight">
+                Full-Stack Developer specializing in building <span className="text-primary">high-performance</span> and scalable web applications.
+              </p>
+              
+              <p className="text-on-surface-variant leading-relaxed text-base md:text-lg font-medium border-l-2 border-primary/20 pl-6 py-2">
+                Hi 👋! I’m a developer dedicated to the <span className="text-on-surface">Laravel & React ecosystem</span>. 
+                With expertise in bridging robust backend architecture with immersive frontend experiences, 
+                I build everything from enterprise-grade <span className="text-on-surface">ERP systems</span> to interactive <span className="text-on-surface">3D web applications</span> using Three.js.
+              </p>
 
-    <p className="text-on-surface-variant leading-relaxed text-sm md:text-base opacity-80 italic">
-      Combining strong tech with creative design to turn complex data into simple, user-friendly experiences    </p>
-  </div>
-</div>
+              <p className="text-on-surface-variant/70 leading-relaxed text-sm md:text-base italic font-light">
+                I am passionate about transforming complex ideas into elegant digital products that deliver real value and exceptional user experiences.
+              </p>
+            </div>
+          </div>
+          </div>
+
+          {/* CTA Buttons */}
         </motion.div>
       </div>
       <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
