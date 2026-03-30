@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from "motion/react";
-import { ExternalLink, X, ZoomIn, ArrowUpRight } from "lucide-react";
+import { X, ZoomIn, ArrowUpRight } from "lucide-react";
 
 // Images Import (Same as before)
 import SchoolImg from "@/src/assets/school.png";
@@ -9,7 +9,7 @@ import POSImg from "@/src/assets/pos-dashboard.png";
 import CaliPizzaImg from "@/src/assets/r_home.png"; 
 import CarSalesImg from "@/src/assets/home.png"; 
 
-const ProjectCard = ({ title, category, image, tech, delay, onImageClick }) => (
+const ProjectCard = ({ title, category, image, tech, delay, github, onImageClick }) => (
   <motion.div 
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -27,7 +27,6 @@ const ProjectCard = ({ title, category, image, tech, delay, onImageClick }) => (
         alt={title} 
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
       />
-      {/* Premium Minimal Overlay */}
       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-[2px]">
         <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 scale-50 group-hover:scale-100 transition-transform duration-500">
           <ZoomIn className="text-white w-5 h-5" />
@@ -47,7 +46,6 @@ const ProjectCard = ({ title, category, image, tech, delay, onImageClick }) => (
         <h4 className="text-2xl font-black text-on-surface tracking-tight group-hover:text-primary transition-colors duration-300">
           {title}
         </h4>
-        {/* Tech Badges */}
         <div className="flex flex-wrap gap-2 pt-1 opacity-60 group-hover:opacity-100 transition-opacity">
           {tech.map((t) => (
             <span key={t} className="text-[9px] font-bold border border-on-surface/10 px-2 py-0.5 rounded-md italic">
@@ -57,12 +55,17 @@ const ProjectCard = ({ title, category, image, tech, delay, onImageClick }) => (
         </div>
       </div>
       
-      <motion.button 
-        whileHover={{ rotate: 45 }}
-        className="p-3 rounded-full bg-surface-high border border-white/5 text-primary shadow-lg"
+      {/* GitHub Redirect Link */}
+      <motion.a 
+        href={github}
+        target="_blank"
+        rel="noopener noreferrer"
+        whileHover={{ rotate: 45, scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="p-3 rounded-full bg-surface-high border border-white/5 text-primary shadow-lg hover:bg-primary hover:text-surface transition-all duration-300"
       >
         <ArrowUpRight className="w-5 h-5" />
-      </motion.button>
+      </motion.a>
     </div>
   </motion.div>
 );
@@ -70,19 +73,48 @@ const ProjectCard = ({ title, category, image, tech, delay, onImageClick }) => (
 const Project = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
+  // Added 'github' property to each project
   const projects = [
-    { title: "RestoPos Engine", category: "F&B Management", tech: ["Laravel", "React"], image: POSImg },
-    { title: "EduShield ERP", category: "Academic System", tech: ["PHP", "Laravel"], image: SchoolImg },
-    { title: "CaliPizza Digital", category: "E-Commerce", tech: ["React", "GSAP"], image: CaliPizzaImg },
-    { title: "AutoDrive Hub", category: "Marketplace", tech: ["Next.js", "Tailwind"], image: CarSalesImg },
-    { title: "InspectPro", category: "Service Platform", tech: ["Vite", "Firebase"], image: HomeInspImg }
+    { 
+      title: "RestoPos Engine", 
+      category: "F&B Management", 
+      tech: ["Laravel", "React"], 
+      image: POSImg,
+      github: "https://github.com/alihassanfullstackdev-code/RestoPos" 
+    },
+    { 
+      title: "EduShield ERP", 
+      category: "Academic System", 
+      tech: ["PHP", "Laravel"], 
+      image: SchoolImg,
+      github: "https://github.com/alihassanfullstackdev-code/EduShield" 
+    },
+    { 
+      title: "CaliPizza Digital", 
+      category: "E-Commerce", 
+      tech: ["React", "GSAP"], 
+      image: CaliPizzaImg,
+      github: "https://github.com/alihassanfullstackdev-code/CaliPizza" 
+    },
+    { 
+      title: "AutoDrive Hub", 
+      category: "Marketplace", 
+      tech: ["Next.js", "Tailwind"], 
+      image: CarSalesImg,
+      github: "https://github.com/alihassanfullstackdev-code/AutoDrive-Hub" 
+    },
+    { 
+      title: "InspectPro", 
+      category: "Service Platform", 
+      tech: ["Vite", "Firebase"], 
+      image: HomeInspImg,
+      github: "https://github.com/alihassanfullstackdev-code/InspectPro" 
+    }
   ];
 
   return (
     <section id="projects" className="py-32 px-8 bg-surface relative">
       <div className="max-w-7xl mx-auto">
-        
-        {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -96,7 +128,6 @@ const Project = () => {
           </div>
         </motion.div>
 
-        {/* 3-Column Balanced Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-24">
           {projects.map((project, index) => (
             <ProjectCard 
@@ -109,7 +140,6 @@ const Project = () => {
         </div>
       </div>
 
-      {/* Fullscreen Preview Modal */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div 
