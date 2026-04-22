@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
+import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 import { NAV_LINKS } from '../constants';
+
+// Registering the plugin to handle smooth scrolling without conflicts
+gsap.registerPlugin(ScrollToPlugin);
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
 
-  // Scroll Tracking Logic
+  // 1. Scroll Tracking Logic (Intersection Observer)
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-20% 0px -70% 0px',
+      rootMargin: '-40% 0px -40% 0px', // Center focused tracking
       threshold: 0,
     };
 
-    const handleIntersect = (entries) => {
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setActiveLink(`#${entry.target.id}`);
@@ -34,19 +39,27 @@ const Navbar = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Smooth Scroll Function
-  const handleNavLinkClick = (e, href) => {
+  // 2. Updated Smooth Scroll Function (Using GSAP to avoid mid-scroll sticking)
+  const handleNavLinkClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
     const sectionId = href.replace('#', '');
     const element = document.getElementById(sectionId);
 
     if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: 'smooth',
+      setIsOpen(false); // Close mobile menu
+
+      gsap.to(window, {
+        duration: 1.5,
+        scrollTo: {
+          y: element,
+          autoKill: false, // Ensures the scroll finishes even if it hits pinned sections
+          offsetY: 20 // Adjust for spacing at the top
+        },
+        ease: "power4.inOut",
+        onComplete: () => {
+          setActiveLink(href);
+        }
       });
-      setActiveLink(href);
-      setIsOpen(false);
     }
   };
 
@@ -57,10 +70,10 @@ const Navbar = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50"
     >
-      {/* Container fix: justify-between keeps things in place on mobile */}
+      {/* Main Navbar Capsule */}
       <div className="glass rounded-full px-6 md:px-8 py-3 flex justify-between md:justify-center items-center border border-white/5 shadow-2xl backdrop-blur-2xl relative">
         
-        {/* Mobile Logo Placeholder (Helpful for alignment) */}
+        {/* Mobile Logo */}
         <div className="md:hidden text-primary font-black tracking-tighter">
           ALİ
         </div>
@@ -91,7 +104,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Mobile Toggle Button: Removed 'absolute' for better flow */}
+        {/* Mobile Toggle Button */}
         <button 
           className="md:hidden relative p-2 text-primary hover:bg-primary/10 rounded-full transition-colors z-[70]"
           onClick={() => setIsOpen(!isOpen)}
@@ -104,6 +117,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <>
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -113,6 +127,7 @@ const Navbar = () => {
               style={{ width: '100vw', height: '100vh', left: '50%', x: '-50%', top: '-24px' }}
             />
             
+            {/* Slide-out Menu */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
