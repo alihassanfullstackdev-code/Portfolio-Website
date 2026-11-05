@@ -1,38 +1,36 @@
-import React from 'react';
-import { motion, useScroll, useSpring } from "motion/react";
-
-// Components Imports
-import Navbar from './components/Navbar';
-import Home from './components/Home';
-import Education from './components/Education';
-import Experience from './components/Experience';
-import Project from './components/Project';
+import { useState } from 'react';
+import About from './components/About';
+import AiWork from './components/AiWork';
+import AvatarStage from './components/AvatarStage';
+import Career from './components/Career';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
+import Hero from './components/Hero';
+import Loader from './components/Loader';
+import Navbar from './components/Navbar';
+import TechStack from './components/TechStack';
+import Work from './components/Work';
+import { useSectionRoutes } from './lib/useSectionRoutes';
 
 export default function App() {
-  const { scrollYProgress } = useScroll();
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  const [ready, setReady] = useState(false);
+  useSectionRoutes(ready);
 
   return (
-    <div className="min-h-screen">
-      {/* Scroll indicator - requires CSS class 'scroll-indicator' */}
-      <motion.div 
-        className="scroll-indicator fixed top-0 left-0 right-0 h-1 bg-primary z-[60]" 
-        style={{ scaleY, transformOrigin: "top" }} 
-      />
-      
+    <>
+      <Loader onDone={() => setReady(true)} />
       <Navbar />
-      <Home />
-      <Education />
-      <Experience />
-      <Project />
-      <Contact />
-      {/* <Footer /> */}
-    </div>
+      <div className="relative">
+        <AvatarStage />
+        <main>
+          <Hero ready={ready} />
+          <About />
+          <AiWork />
+          <Work />
+          <TechStack />
+          <Career />
+          <Contact />
+        </main>
+      </div>
+    </>
   );
 }

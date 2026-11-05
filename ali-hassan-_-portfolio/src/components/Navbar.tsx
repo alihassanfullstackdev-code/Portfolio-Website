@@ -1,176 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
-import { gsap } from 'gsap';
-import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
-import { NAV_LINKS } from '../constants';
+import { useEffect, useState } from 'react';
+import { Menu, X, Github, Linkedin, Instagram, Phone, ArrowUpRight } from 'lucide-react';
+import { navLinks, profile, socials } from '../data/portfolio';
 
-// Registering the plugin to handle smooth scrolling without conflicts
-gsap.registerPlugin(ScrollToPlugin);
+const socialIcons = [
+  { Icon: Github, href: socials.github, label: 'GitHub' },
+  { Icon: Linkedin, href: socials.linkedin, label: 'LinkedIn' },
+  { Icon: Instagram, href: socials.instagram, label: 'Instagram' },
+  { Icon: Phone, href: socials.whatsapp, label: 'WhatsApp' },
+];
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState('#home');
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
 
-  // 1. Scroll Tracking Logic (Intersection Observer)
+  // The page behind the open phone menu should not scroll.
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-40% 0px -40% 0px', // Center focused tracking
-      threshold: 0,
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
     };
-
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveLink(`#${entry.target.id}`);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersect, observerOptions);
-
-    NAV_LINKS.forEach((link) => {
-      const sectionId = link.href.replace('#', '');
-      const element = document.getElementById(sectionId);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  // 2. Updated Smooth Scroll Function (Using GSAP to avoid mid-scroll sticking)
-  const handleNavLinkClick = (e: React.MouseEvent, href: string) => {
-    e.preventDefault();
-    const sectionId = href.replace('#', '');
-    const element = document.getElementById(sectionId);
-
-    if (element) {
-      setIsOpen(false); // Close mobile menu
-
-      gsap.to(window, {
-        duration: 1.5,
-        scrollTo: {
-          y: element,
-          autoKill: false, // Ensures the scroll finishes even if it hits pinned sections
-          offsetY: 20 // Adjust for spacing at the top
-        },
-        ease: "power4.inOut",
-        onComplete: () => {
-          setActiveLink(href);
-        }
-      });
-    }
-  };
+  }, [open]);
 
   return (
-    <motion.nav 
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50"
-    >
-      {/* Main Navbar Capsule */}
-      <div className="glass rounded-full px-6 md:px-8 py-3 flex justify-between md:justify-center items-center border border-white/5 shadow-2xl backdrop-blur-2xl relative">
-        
-        {/* Mobile Logo */}
-        <div className="md:hidden text-primary font-black tracking-tighter">
-          ALİ
+    <>
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-ink/90 backdrop-blur">
+        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-6 px-6 py-2 md:px-10">
+          <a href="/" data-route className="display inline-flex min-h-11 items-center text-xl" aria-label="Back to top">
+            {profile.initials}
+          </a>
+          <a href={`mailto:${profile.email}`} className="hidden min-h-11 items-center text-sm text-muted transition-colors hover:text-accent xl:inline-flex">
+            {profile.email}
+          </a>
+          <nav className="hidden items-center gap-6 md:flex lg:gap-8" aria-label="Main">
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} data-route className="inline-flex min-h-11 items-center text-sm font-semibold tracking-wide uppercase transition-colors hover:text-accent">
+                {link.name}
+              </a>
+            ))}
+            <a href={profile.resume} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold tracking-wide text-accent uppercase hover:underline">
+              Resume <ArrowUpRight size={16} />
+            </a>
+          </nav>
+          <button
+            type="button"
+            className="flex h-11 w-11 items-center justify-center md:hidden"
+            onClick={() => setOpen(!open)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            {open ? <X /> : <Menu />}
+          </button>
         </div>
+      </header>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map((link, index) => (
-            <motion.a 
-              key={link.name} 
-              href={link.href} 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
-              onClick={(e) => handleNavLinkClick(e, link.href)}
-              className={`px-5 py-2 rounded-full text-[13px] font-bold uppercase tracking-widest transition-all duration-300 relative group
-                ${activeLink === link.href ? 'text-primary' : 'text-on-surface-variant hover:text-primary'}
-              `}
-            >
-              <span className="relative z-10">{link.name}</span>
-              {activeLink === link.href && (
-                <motion.span 
-                  layoutId="activeNavIndicator"
-                  className="absolute inset-0 bg-primary/10 rounded-full -z-0 border border-primary/20"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-            </motion.a>
+      {open && (
+        <nav className="fixed inset-0 z-40 flex flex-col justify-center gap-5 overflow-y-auto bg-ink px-6 py-20 md:hidden" aria-label="Mobile">
+          {navLinks.map((link) => (
+            <a key={link.href} href={link.href} data-route onClick={() => setOpen(false)} className="display inline-flex min-h-11 items-center text-3xl sm:text-4xl">
+              {link.name}
+            </a>
           ))}
-        </div>
+          <a href={profile.resume} target="_blank" rel="noopener noreferrer" className="display inline-flex min-h-11 items-center text-3xl text-accent sm:text-4xl">
+            Resume
+          </a>
+        </nav>
+      )}
 
-        {/* Mobile Toggle Button */}
-        <button 
-          className="md:hidden relative p-2 text-primary hover:bg-primary/10 rounded-full transition-colors z-[70]"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+      <div className="fixed bottom-6 left-4 z-30 hidden flex-col rounded-full bg-ink/75 p-0.5 text-white backdrop-blur md:left-7 lg:flex">
+        {socialIcons.map(({ Icon, href, label }) => (
+          <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-11 w-11 items-center justify-center">
+            <Icon size={20} />
+          </a>
+        ))}
       </div>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-md z-[55] md:hidden"
-              style={{ width: '100vw', height: '100vh', left: '50%', x: '-50%', top: '-24px' }}
-            />
-            
-            {/* Slide-out Menu */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "110%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 w-[85%] max-w-sm glass rounded-l-[2rem] shadow-2xl z-[60] md:hidden flex flex-col p-10 border-l border-white/10"
-              style={{ height: '100vh' }}
-            >
-              <div className="flex justify-between items-center mb-16">
-                <span className="text-xl font-black text-primary tracking-tighter uppercase">Menu</span>
-                <button onClick={() => setIsOpen(false)} className="p-3 bg-primary/10 text-primary rounded-full">
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-
-              <div className="flex flex-col gap-6">
-                {NAV_LINKS.map((link, index) => (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + index * 0.1 }}
-                    onClick={(e) => handleNavLinkClick(e, link.href)}
-                    className={`text-5xl font-black tracking-tighter flex items-center justify-between group 
-                      ${activeLink === link.href ? 'text-primary' : 'text-on-surface-variant hover:text-primary'}
-                    `}
-                  >
-                    {link.name}
-                    <ArrowUpRight className={`w-8 h-8 transition-transform ${activeLink === link.href ? 'opacity-100 rotate-45' : 'opacity-0 group-hover:opacity-100'}`} />
-                  </motion.a>
-                ))}
-              </div>
-
-              <div className="mt-auto">
-                <p className="text-xs text-white/20 tracking-widest uppercase">Faisalabad, PK // 2026</p>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+    </>
   );
-};
-
-export default Navbar;
+}
